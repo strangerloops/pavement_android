@@ -15,10 +15,12 @@ public class SplashActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
+        PavementBusProvider.getInstance().unregister(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        PavementBusProvider.getInstance().register(this);
     }
 }

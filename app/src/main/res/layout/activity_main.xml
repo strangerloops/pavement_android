@@ -33,7 +33,6 @@
             android:layout_below="@id/start_btn"
             android:layout_marginTop="5dp"
             android:background="@android:color/white"
-            android:paddingTop="10dp"
             android:text="@string/stop_txt"
             android:textSize="20sp"/>
     </RelativeLayout>
