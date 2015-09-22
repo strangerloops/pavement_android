@@ -32,6 +32,7 @@ public class SplashActivity extends Activity {
 
         //Once Splash Screen is shown and necessary resources requested or loaded then this intent should be launched.
 
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -43,6 +44,8 @@ public class SplashActivity extends Activity {
 
             }
         }, 3000L);
+
+
 
     }
 }
