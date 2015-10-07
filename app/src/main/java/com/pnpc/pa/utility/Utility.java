@@ -4,7 +4,9 @@ package com.pnpc.pa.utility;
  * Created by markusmcgee on 9/10/15.
  */
 
+import android.app.ActivityManager;
 import android.app.AlertDialog;
+import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.location.Location;
@@ -13,6 +15,8 @@ import android.net.NetworkInfo;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+
+import java.util.List;
 
 /**
  * Created by markusmcgee on 4/16/15.
@@ -43,6 +47,16 @@ public class Utility {
         return INSTANCE;
     }
 
+    public static boolean isServiceRunning(String serviceClassName, Context context) {
+        final ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        final List<ActivityManager.RunningServiceInfo> services = activityManager.getRunningServices(Integer.MAX_VALUE);
+        for (ActivityManager.RunningServiceInfo runningServiceInfo : services) {
+            if (runningServiceInfo.service.getClassName().equals(serviceClassName)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 
     public GoogleApiClient buildGoogleApiClient(GoogleApiClient.ConnectionCallbacks connectionCallback, GoogleApiClient.OnConnectionFailedListener failedCallback) {

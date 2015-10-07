@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.os.Handler;
 
+import com.pnpc.pa.service.GPSService;
+import com.pnpc.pa.utility.Utility;
+
 
 /**
  * Created by markusmcgee on 9/21/15.
@@ -17,6 +20,9 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_view);
+
+        if (Utility.getInstance().isServiceRunning(GPSService.NAME, this) == false)
+            startService(new Intent(this, GPSService.class));
     }
 
     @Override
@@ -43,7 +49,6 @@ public class SplashActivity extends Activity {
 
             }
         }, 3000L);
-
 
 
     }

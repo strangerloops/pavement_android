@@ -19,8 +19,11 @@ import android.util.Log;
  */
 public class GPSService extends Service {
 
+    private static final String TAG = "GPSService";
     private LocationManager mLocationManager;
     private Location mLocation;
+
+    public static final String NAME = "GPSService";
 
     @Nullable
     @Override
@@ -57,20 +60,23 @@ public class GPSService extends Service {
         @Override
         public void onLocationChanged(Location location) {
             mLocation = location;
+            Log.d(TAG, "onLocationChanged");
         }
 
         @Override
         public void onStatusChanged(String provider, int status, Bundle extras) {
-
+            Log.d(TAG, "onStatusChanged");
         }
 
         @Override
         public void onProviderEnabled(String provider) {
+            Log.d(TAG, "onProviderEnabled");
 
         }
 
         @Override
         public void onProviderDisabled(String provider) {
+            Log.d(TAG, "onProviderDisabled");
 
         }
     };
