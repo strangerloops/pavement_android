@@ -20,9 +20,6 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_view);
-
-        if (Utility.getInstance().isServiceRunning(GPSService.NAME, this) == false)
-            startService(new Intent(this, GPSService.class));
     }
 
     @Override

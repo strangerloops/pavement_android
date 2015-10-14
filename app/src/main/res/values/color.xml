@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="pavement_green">#66e3b6</color>
+    <color name="pavement_green_go">#66e3b6</color>
+    <color name="pavement_green_stop">#e38c66</color>
+</resources>
