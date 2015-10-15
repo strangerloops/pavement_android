@@ -3,11 +3,9 @@ package com.pnpc.pa;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.os.Handler;
 
-import com.pnpc.pa.service.GPSService;
-import com.pnpc.pa.utility.Utility;
+import com.pnpc.pa.event.PavementBusProvider;
 
 
 /**

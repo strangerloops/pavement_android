@@ -1,5 +1,6 @@
-package com.pnpc.pa;
+package com.pnpc.pa.event;
 
+import com.pnpc.pa.MainThreadBus;
 import com.squareup.otto.Bus;
 
 /**

@@ -39,6 +39,11 @@ public class GPSService extends Service implements LocationListener, SensorEvent
     }
 
     @Override
+    public void onCreate() {
+        super.onCreate();
+    }
+
+    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.e("Google", "Service Started");
 
@@ -66,10 +71,25 @@ public class GPSService extends Service implements LocationListener, SensorEvent
                 0, 0, this);
 
 
-
         mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_GRAVITY), SensorManager.SENSOR_DELAY_FASTEST);
 
         return START_STICKY;
+    }
+
+    @Override
+    public void onDestroy() {
+        try {
+            mLocationManager.removeUpdates(this);
+            mSensorManager.unregisterListener(this);
+        }
+        catch (SecurityException e) {
+            e.printStackTrace();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        super.onDestroy();
     }
 
     @Override
@@ -104,7 +124,7 @@ public class GPSService extends Service implements LocationListener, SensorEvent
 
         Log.d(TAG + "Z: ", Float.toString(z));
 
-        new SensorEventTask().execute(event);
+        //new SensorEventTask().execute(event);
 
 
     }
@@ -114,14 +134,14 @@ public class GPSService extends Service implements LocationListener, SensorEvent
         Log.d(TAG, "onAccuracyChanged");
     }
 
-    private class LocationChangeTask extends AsyncTask<Location, Void, Void>{
+    private class LocationChangeTask extends AsyncTask<Location, Void, Void> {
         @Override
         protected Void doInBackground(Location... params) {
             return null;
         }
     }
 
-    private class SensorEventTask extends AsyncTask<SensorEvent,Void, Void>{
+    private class SensorEventTask extends AsyncTask<SensorEvent, Void, Void> {
         @Override
         protected Void doInBackground(SensorEvent... params) {
             return null;

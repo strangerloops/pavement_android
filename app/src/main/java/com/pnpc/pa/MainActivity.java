@@ -1,5 +1,6 @@
 package com.pnpc.pa;
 
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,13 +9,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.pnpc.pa.event.PavementBusProvider;
+import com.pnpc.pa.event.PavementEvent;
 import com.pnpc.pa.service.GPSService;
 import com.pnpc.pa.utility.Utility;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "MainActivity";
-    private Intent gpsIntent;
     Button mPavementButton = null;
 
     @Override
@@ -60,21 +62,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return super.onOptionsItemSelected(item);
     }
 
+
     @Override
     public void onClick(View v) {
 
-        if (((Button) v).getText().equals("START")) {
-            if (Utility.getInstance().isServiceRunning(GPSService.NAME, getApplicationContext()) == false) {
-                gpsIntent = new Intent(getApplicationContext(), GPSService.class);
-                startService(gpsIntent);
-                ((Button) v).setText("STOP");
-            }
+        if (Utility.getInstance().isServiceRunning(GPSService.class.getName(), this) == false) {
+            startService(new Intent(this, GPSService.class));
+            ((Button) v).setText("STOP");
         }
         else {
-            if (Utility.getInstance().isServiceRunning(GPSService.NAME, getApplicationContext()) == true) {
-                if (gpsIntent != null) ;
-                stopService(gpsIntent);
-                ((Button) v).setText("START");
+            stopService(new Intent(this, GPSService.class));
+            ((Button) v).setText("START");
 
                         /*
 
@@ -110,10 +108,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         }
 
                          */
-            }
         }
     }
-
-
-
 }
