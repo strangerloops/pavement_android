@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.pnpc.pa.event.PavementBusProvider;
 import com.pnpc.pa.event.PavementEvent;
@@ -18,12 +19,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private static final String TAG = "MainActivity";
     Button mPavementButton = null;
+    LinearLayout main_view = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        main_view = (LinearLayout) findViewById(R.id.main_view);
         mPavementButton = (Button) findViewById(R.id.start_stop_btn);
         mPavementButton.setOnClickListener(this);
     }
@@ -75,12 +78,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
 
         if (Utility.getInstance().isServiceRunning(GPSService.class.getName(), this) == false) {
+            main_view.setBackgroundColor(getResources().getColor(R.color.pavement_stop_view));
             startPaymentService();
             ((Button) v).setText("STOP");
+            ((Button) v).setBackgroundResource(R.drawable.circle_button_shape_stop);
         }
         else {
+            main_view.setBackgroundColor(getResources().getColor(R.color.pavement_go_view));
             stopPavementService();
             ((Button) v).setText("START");
+            ((Button) v).setBackgroundResource(R.drawable.circle_button_shape_go);
 
             /*
 

@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="pavement_green">#66e3b6</color>
-    <color name="pavement_green_go">#66e3b6</color>
-    <color name="pavement_green_stop">#e38c66</color>
+
+    <color name="pavement_go_view">#66e3b6</color>
+    <color name="pavement_stop_view">#e38c66</color>
+
+    <color name="pavement_go_button">#94ebcc</color>
+    <color name="pavement_stop_button">#ebae94</color>
+
+
+
 </resources>
