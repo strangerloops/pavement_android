@@ -40,6 +40,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         PavementBusProvider.getInstance().register(this);
     }
 
+    private void stopPavementService() {
+        stopService(new Intent(this, GPSService.class));
+    }
+
+    private void startPaymentService() {
+        startService(new Intent(this, GPSService.class));
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -67,47 +75,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
 
         if (Utility.getInstance().isServiceRunning(GPSService.class.getName(), this) == false) {
-            startService(new Intent(this, GPSService.class));
+            startPaymentService();
             ((Button) v).setText("STOP");
         }
         else {
-            stopService(new Intent(this, GPSService.class));
+            stopPavementService();
             ((Button) v).setText("START");
 
-                        /*
+            /*
 
-                        This should post on the first go with no endtime.  Use the rideId returned for the readings. Then at the end of the ride
-                        send the rideid.
+            This should post on the first go with no endtime.  Use the rideId returned for the readings. Then at the end of the ride
+            send the rideid.
 
-                        POST https://project-pavement.herokuapp.com/rides
-                        {
-                           ride:{
-                                start_time: UNIX NO,
-                                device_id: UUID?,  //Will show how to generate.  Unique to device, won't duplicate and consistant.
-                                end_time: UNIX NO
-                           }
-                        }
+            POST https://project-pavement.herokuapp.com/rides
+            {
+               ride:{
+                    start_time: UNIX NO,
+                    device_id: UUID?,  //Will show how to generate.  Unique to device, won't duplicate and consistant.
+                    end_time: UNIX NO
+               }
+            }
 
-                        On every single GPS update post your reading.
-                        POST https://project-pavement.herokuapp.com/readings
-                        {
-                            reading:{
-                                startLat:
-                                startLon:
-                                endLat:
-                                endLon:
-                                accelerationX:[array of longs]
-                                accelerationY:[array of longs]
-                                accelerationZ:[array of longs]
-                                accelerationG:[array of longs]
-                                startTime:
-                                endTime:
-                                rideId: Returned from Ride above
-                            ]
+            On every single GPS update post your reading.
+            POST https://project-pavement.herokuapp.com/readings
+            {
+                reading:{
+                    startLat:
+                    startLon:
+                    endLat:
+                    endLon:
+                    accelerationX:[array of longs]
+                    accelerationY:[array of longs]
+                    accelerationZ:[array of longs]
+                    accelerationG:[array of longs]
+                    startTime:
+                    endTime:
+                    rideId: Returned from Ride above
+                ]
 
-                        }
+            }
 
-                         */
+             */
         }
     }
 }

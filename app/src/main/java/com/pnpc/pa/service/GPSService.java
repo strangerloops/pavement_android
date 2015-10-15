@@ -1,6 +1,8 @@
 package com.pnpc.pa.service;
 
 import android.Manifest;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -16,9 +18,12 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.pnpc.pa.R;
 
 /**
  * Created by markusmcgee on 9/22/15.
@@ -29,6 +34,10 @@ public class GPSService extends Service implements LocationListener, SensorEvent
     public static final String NAME = "GPSService";
     private LocationManager mLocationManager;
     private Location mLocation;
+    private NotificationManager mNotificationManager = null;
+
+    private static final int NOTIFICATION = 1;
+
 
     private SensorManager mSensorManager;
 
@@ -45,7 +54,22 @@ public class GPSService extends Service implements LocationListener, SensorEvent
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.e("Google", "Service Started");
+        Log.d(TAG, "Service Started");
+
+        if (mNotificationManager == null) {
+            mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        }
+
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(getApplicationContext())
+                        .setSmallIcon(R.drawable.bike_with_speed_lines_small)
+                        .setContentTitle("Pavement App Running")
+                        .setContentText("GPS and Accelerometer readings being taken.");
+
+        Notification mNotification = mBuilder.build();
+        mNotification.flags |= Notification.FLAG_NO_CLEAR | Notification.FLAG_ONGOING_EVENT;
+
+        mNotificationManager.notify(NOTIFICATION, mNotification);
 
         Toast.makeText(this, "service starting", Toast.LENGTH_SHORT).show();
 
@@ -81,6 +105,7 @@ public class GPSService extends Service implements LocationListener, SensorEvent
         try {
             mLocationManager.removeUpdates(this);
             mSensorManager.unregisterListener(this);
+            mNotificationManager.cancel(NOTIFICATION);
         }
         catch (SecurityException e) {
             e.printStackTrace();
